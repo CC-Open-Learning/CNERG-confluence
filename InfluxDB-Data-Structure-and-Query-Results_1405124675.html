@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CNERG F24 : InfluxDB Data Structure and Query Results</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="CNERG-F24_1356464471.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1405353987.html">Database(InfluxDB)</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            CNERG F24 : InfluxDB Data Structure and Query Results
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                            
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Eunie</span>, last modified on Nov 18, 2024
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p><strong>InfluxDB Data Structure</strong>:</p><p>InfluxDB is a time-series database that stores data in a <strong>highly optimized format</strong> for time-based measurements. Its data model is different from traditional databases because it is designed to handle <strong>metrics and events</strong> that occur over time. Here’s a breakdown of the key components and why the structure looks different when you query data</p><ol start="1"><li><p><strong>Key Components of InfluxDB</strong></p><ol start="1"><li><p><strong>Measurements</strong>: This is similar to a table in a relational database.<br/>In the query results, <code>_measurement</code> indicates the stored data type, such as <code>foot_traffic</code>.<br/>The <strong>_measurement</strong> field in InfluxDB is defined when you upload (or ingest) data into the database.</p></li><li><p><strong>Tags</strong>: Tags are used for <strong>indexing</strong> and are ideal for fields that you want to use as filters. DOOR_ID is treated as a <strong>tag</strong> in the query results because it represents a categorical identifier (e.g., 0, 1, 2) rather than a value that changes over time.</p></li><li><p><strong>Fields</strong>: Fields store the <strong>actual data values</strong> (e.g., sensor readings or metrics).<br/>Fields are not indexed, making them suitable for data that changes frequently.<br/>In the query results, <code>IN</code> and <code>OUT</code> are represented as <strong>_field</strong> and <strong>_value</strong>. Each reading (such as the number of people <code>IN</code> or <code>OUT</code>) is a <strong>field</strong> with a corresponding <strong>value</strong>.</p></li><li><p><strong>Time</strong>: InfluxDB data is <strong>time-stamped</strong>, which means every record is associated with a specific point in time. <code>_time</code> represents when each data point was recorded. <code>_start</code> and <code>_stop</code> define the range of time for the queried data.<br/></p></li></ol></li><li><p><strong>Original CSV Data Example: </strong><span class="confluence-embedded-file-wrapper"><a class="confluence-embedded-file" href="attachments/1405124675/1405124694.csv" data-nice-type="null" data-file-src="/wiki/download/attachments/1405124675/foot_traffic_mock_data_sept_oct.csv?version=1&amp;modificationDate=1729307213646&amp;cacheVersion=1&amp;api=v2" data-linked-resource-id="1405124694" data-linked-resource-type="attachment" data-linked-resource-container-id="1405124675" data-linked-resource-default-alias="foot_traffic_mock_data_sept_oct.csv" data-mime-type="text/csv" data-has-thumbnail="true" data-linked-resource-version="1" data-media-id="068f5124-1748-4a25-8927-c454114061d5" data-media-type="file"><img src="attachments/thumbnails/1405124675/1405124694" height="250"/></a></span> </p></li></ol><p>The original data is a simple CSV file where each row represents a snapshot of foot traffic data for different doors at specific times.</p><div class="table-wrap"><table data-table-width="760" data-layout="default" data-local-id="28dc54a2-7175-4821-81fc-ced05e316be7" class="confluenceTable"><tbody><tr><th class="confluenceTh"><p><strong>Time</strong></p></th><th class="confluenceTh"><p><strong>DOOR_ID</strong></p></th><th class="confluenceTh"><p><strong>IN</strong></p></th><th class="confluenceTh"><p><strong>OUT</strong></p></th></tr><tr><td class="confluenceTd"><p>2024-10-17 09:50:21</p></td><td class="confluenceTd"><p>0</p></td><td class="confluenceTd"><p>3</p></td><td class="confluenceTd"><p>0</p></td></tr><tr><td class="confluenceTd"><p>2024-10-17 09:01:50</p></td><td class="confluenceTd"><p>1</p></td><td class="confluenceTd"><p>1</p></td><td class="confluenceTd"><p>5</p></td></tr><tr><td class="confluenceTd"><p>2024-10-17 09:51:46</p></td><td class="confluenceTd"><p>1</p></td><td class="confluenceTd"><p>9</p></td><td class="confluenceTd"><p>0</p></td></tr><tr><td class="confluenceTd"><p>2024-10-17 09:00:58</p></td><td class="confluenceTd"><p>1</p></td><td class="confluenceTd"><p>2</p></td><td class="confluenceTd"><p>9</p></td></tr></tbody></table></div><p /><ol start="3"><li><p><strong>InfluxDB Query Result Example: </strong><span class="confluence-embedded-file-wrapper"><a class="confluence-embedded-file" href="attachments/1405124675/1405354060.csv" data-nice-type="null" data-file-src="/wiki/download/attachments/1405124675/foot_traffic_query_results.csv?version=1&amp;modificationDate=1729307220450&amp;cacheVersion=1&amp;api=v2" data-linked-resource-id="1405354060" data-linked-resource-type="attachment" data-linked-resource-container-id="1405124675" data-linked-resource-default-alias="foot_traffic_query_results.csv" data-mime-type="text/csv" data-has-thumbnail="true" data-linked-resource-version="1" data-media-id="dd50ef17-3dfb-4ef2-86bd-eef4da912ced" data-media-type="file"><img src="attachments/thumbnails/1405124675/1405354060" height="250"/></a></span> <br/>After inserting the above CSV data into InfluxDB, a query for this data might produce the following structure:</p></li></ol><div class="table-wrap"><table data-table-width="760" data-layout="default" data-local-id="19a7c66b-c784-4743-b053-03111f783db7" class="confluenceTable"><tbody><tr><th class="confluenceTh"><p><strong>_start</strong></p></th><th class="confluenceTh"><p><strong>_stop</strong></p></th><th class="confluenceTh"><p><strong>DOOR_ID</strong></p></th><th class="confluenceTh"><p><strong>_field</strong></p></th><th class="confluenceTh"><p><strong>_measurement</strong></p></th><th class="confluenceTh"><p><strong>_time</strong></p></th><th class="confluenceTh"><p><strong>_value</strong></p></th></tr><tr><td class="confluenceTd"><p>2024-10-17T09:00:00Z</p></td><td class="confluenceTd"><p>2024-10-18T09:00:00Z</p></td><td class="confluenceTd"><p>0</p></td><td class="confluenceTd"><p>IN</p></td><td class="confluenceTd"><p>foot_traffic</p></td><td class="confluenceTd"><p>2024-10-17T09:50:21Z</p></td><td class="confluenceTd"><p>3</p></td></tr><tr><td class="confluenceTd"><p>2024-10-17T09:00:00Z</p></td><td class="confluenceTd"><p>2024-10-18T09:00:00Z</p></td><td class="confluenceTd"><p>0</p></td><td class="confluenceTd"><p>OUT</p></td><td class="confluenceTd"><p>foot_traffic</p></td><td class="confluenceTd"><p>2024-10-17T09:50:21Z</p></td><td class="confluenceTd"><p>0</p></td></tr><tr><td class="confluenceTd"><p>2024-10-17T09:00:00Z</p></td><td class="confluenceTd"><p>2024-10-18T09:00:00Z</p></td><td class="confluenceTd"><p>1</p></td><td class="confluenceTd"><p>IN</p></td><td class="confluenceTd"><p>foot_traffic</p></td><td class="confluenceTd"><p>2024-10-17T09:01:50Z</p></td><td class="confluenceTd"><p>1</p></td></tr><tr><td class="confluenceTd"><p>2024-10-17T09:00:00Z</p></td><td class="confluenceTd"><p>2024-10-18T09:00:00Z</p></td><td class="confluenceTd"><p>1</p></td><td class="confluenceTd"><p>OUT</p></td><td class="confluenceTd"><p>foot_traffic</p></td><td class="confluenceTd"><p>2024-10-17T09:01:50Z</p></td><td class="confluenceTd"><p>5</p></td></tr></tbody></table></div><h3 id="InfluxDBDataStructureandQueryResults-ExampleinaQuery:">Example in a Query:</h3><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">from(bucket: &quot;foot_traffic_db_v1&quot;)
+  |&gt; range(start: 2024-10-17T00:00:00Z, stop: 2024-10-18T00:00:00Z)</pre>
+</div></div><ul><li><p>In this query:</p><ul><li><p><strong>_start</strong> is <code>2024-10-17T00:00:00Z</code>. (The beginning of the time range for the query.)</p></li><li><p><strong>_stop</strong> is <code>2024-10-18T00:00:00Z</code>. (The end of the time range for the query.</p></li></ul></li><li><p>Example Codes for ingesting and downloading data</p><ul><li><p><span class="confluence-embedded-file-wrapper"><a class="confluence-embedded-file" href="attachments/1405124675/1471578128.py" data-nice-type="null" data-file-src="/wiki/download/attachments/1405124675/ingest_foot_traffic_data.py?version=1&amp;modificationDate=1731940144528&amp;cacheVersion=1&amp;api=v2" data-linked-resource-id="1471578128" data-linked-resource-type="attachment" data-linked-resource-container-id="1405124675" data-linked-resource-default-alias="ingest_foot_traffic_data.py" data-mime-type="text/x-python" data-has-thumbnail="true" data-linked-resource-version="1" data-media-id="828f0368-2d78-4698-919c-9d6d34049673" data-media-type="file"><img src="attachments/thumbnails/1405124675/1471578128" height="250"/></a></span> </p></li><li><p><span class="confluence-embedded-file-wrapper"><a class="confluence-embedded-file" href="attachments/1405124675/1471971331.py" data-nice-type="null" data-file-src="/wiki/download/attachments/1405124675/download_data.py?version=1&amp;modificationDate=1731940137346&amp;cacheVersion=1&amp;api=v2" data-linked-resource-id="1471971331" data-linked-resource-type="attachment" data-linked-resource-container-id="1405124675" data-linked-resource-default-alias="download_data.py" data-mime-type="text/x-python" data-has-thumbnail="true" data-linked-resource-version="1" data-media-id="348991c4-5d39-4f73-a71b-b397ded7ce91" data-media-type="file"><img src="attachments/thumbnails/1405124675/1471971331" height="250"/></a></span> </p></li></ul></li></ul>
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1405124675/1405124694.csv">foot_traffic_mock_data_sept_oct.csv</a> (text/csv)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1405124675/1405354060.csv">foot_traffic_query_results.csv</a> (text/csv)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1405124675/1471971331.py">download_data.py</a> (text/x-python)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1405124675/1471578128.py">ingest_foot_traffic_data.py</a> (text/x-python)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Jun 20, 2025 13:54</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

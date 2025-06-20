@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CNERG F24 : InfluxDB Local Testing and Concept Overview</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="CNERG-F24_1356464471.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1405353987.html">Database(InfluxDB)</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            CNERG F24 : InfluxDB Local Testing and Concept Overview
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                            
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Eunie</span>, last modified on Oct 19, 2024
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p>We plan to build a database to accumulate data, allowing access to and utilization of past data.</p><p><strong> </strong></p><p><strong>InfluxDB</strong></p><p>We are considering using InfluxDB as the database for storing data from the Foot Traffic Counter. This document provides an overview of InfluxDB and instructions for its installation. </p><blockquote><p><strong>InfluxDB is an open-source time-series database (TSDB) designed </strong>specifically to handle large volumes of time-stamped or time-series data. It excels at efficiently storing, querying, and analyzing metrics, events, and real-time data, making it popular for use cases like monitoring, IoT, and analytics.</p><p><strong>What is InfluxDB?</strong></p><ul><li><p>Purpose: InfluxDB is built to handle time-stamped data efficiently, allowing you to store and retrieve time-series data in real-time.</p></li><li><p>Time-Series Data: This is any data that is collected over time and has an associated timestamp. Examples include:</p><ul><li><p>Sensor data (like temperature, humidity, or, in your case, foot traffic counts)</p></li><li><p>Server performance metrics (CPU usage, memory usage over time)</p></li><li><p>Financial data (stock prices, transactions over time)</p></li><li><p>Event logs (e.g., user activity logs, website visits)</p></li></ul></li></ul><p><strong>Why Use InfluxDB for Time-Series Data?</strong></p><p>InfluxDB is optimized for time-series data, which differs from traditional relational data (e.g., MySQL, PostgreSQL) because:</p><ol start="1"><li><p>Timestamps: In time-series data, the timestamp is a critical part of the data. InfluxDB treats time as a first-class citizen, making it easier to query and manage time-stamped data.</p></li><li><p>Efficient Storage: Time-series data can grow very quickly. InfluxDB is optimized for high-write environments, meaning it can handle millions of data points per second while keeping storage efficient.</p></li><li><p>Retention Policies: InfluxDB allows you to set up retention policies, which automatically expire old data to manage storage without needing manual intervention.</p></li><li><p>Downsampling and Aggregation: It can downsample data automatically (i.e., aggregate and store summarized data), helping reduce the amount of stored data while keeping essential trends and patterns.</p></li><li><p>Querying Time-Series Data: InfluxDB provides a SQL-like query language called InfluxQL, which is optimized for time-series queries like finding data over a specific time range, calculating moving averages, or detecting patterns over time.</p></li></ol></blockquote><p /><p><strong>[ Installing InfluxDB OSS ]</strong></p><p>Steps to Install InfluxDB on Windows:</p><ol start="1"><li><p>Download InfluxDB:</p></li></ol><ul><li><p>Go to the InfluxDB Downloads page.( <a class="external-link" data-card-appearance="inline" href="https://www.influxdata.com/downloads/" rel="nofollow">https://www.influxdata.com/downloads/</a> )</p></li><li><p>Scroll down to find the Windows section.</p></li><li><p>Download the latest InfluxDB OSS ZIP file for Windows.</p></li></ul><ol start="2"><li><p>Extract the ZIP File</p></li></ol><ul><li><p>Once downloaded, extract the ZIP file to a directory of your choice. This will contain the influxd.exe (the InfluxDB server) binary.</p></li></ul><ol start="3"><li><p>Start InfluxDB:</p></li></ol><ul><li><p>Open Command Prompt as Administrator.</p></li><li><p>Navigate to the folder where you extracted InfluxDB (use the cd command to change directories).</p></li><li><p>Run the following command to start the InfluxDB server: </p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">influxd.exe</pre>
+</div></div></li><li><p>The server should now be running; you will see the log output in the Command Prompt.</p></li></ul><ol start="4"><li><p>Access InfluxDB</p></li></ol><ul><li><p>By default, InfluxDB runs on port 8086. You can access the InfluxDB UI by opening a web browser and going to: <a class="external-link" href="http://localhost:8086" rel="nofollow">http://localhost:8086</a><br/></p><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image image-center" alt="image-20241004-023232.png" width="468" loading="lazy" src="attachments/1380483073/1380352012.png?width=468" data-image-src="attachments/1380483073/1380352012.png" data-height="206" data-width="468" data-unresolved-comment-count="0" data-linked-resource-id="1380352012" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20241004-023232.png" data-base-url="https://varlab-dev.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="1380483073" data-linked-resource-container-version="6" data-media-id="e6bf0dd0-33ac-463b-b69e-5582698c3bc5" data-media-type="file"></span><p /></li></ul><p><strong>[ Installing Telegraf ]</strong></p><p>: Telegraf is a lightweight data collection agent provided by InfluxData that collects data from various input sources and sends it to databases or systems, including InfluxDB.</p><ol start="1"><li><p>Download the Telegraf ZIP file:<br/>Visit the Telegraf Downloads page and download the latest version of Telegraf for Windows.</p></li><li><p>Extract the files:<br/>Once the ZIP file is downloaded, extract it to a directory of your choice.</p></li></ol><p /><p><strong>[ Example 1: Sending CSV Data to a Database via Telegraf ]</strong></p><ul><li><p>To send CSV data to a database using Telegraf, you can configure Telegraf to read from a CSV file and send the data to InfluxDB (or another supported database). Here's an example of how to configure this:</p></li></ul><ol start="1"><li><p>Edit the Telegraf configuration(telegraf.conf)</p></li></ol><div class="table-wrap"><table data-table-width="760" data-layout="default" data-local-id="6f670af9-256e-4165-8707-596ebd202bc6" class="confluenceTable"><tbody><tr><td class="confluenceTd"><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">[[inputs.file]]
+
+  files = [&quot;C:\\Users\\likeh\\Project\\Python_Util\\foot_traffic_september_2024.csv&quot;]
+
+  data_format = &quot;csv&quot;
+
+  csv_header_row_count = 1
+
+  csv_column_names = [&quot;Timestamp&quot;, &quot;Entry_Count&quot;, &quot;Exit_Count&quot;, &quot;Classroom_ID&quot;]
+
+  csv_delimiter = &quot;,&quot;
+
+  csv_timestamp_column = &quot;Timestamp&quot;
+
+  csv_timestamp_format = &quot;2006-01-02T15:04:05&quot;
+
+ 
+
+[[outputs.influxdb_v2]]
+
+  urls = [&quot;http://localhost:8086&quot;]
+
+  token = &quot;A5hHLzJFpU6xMn8LYu3JL4_Zez3P7YFx3SB8pMen9GgOIqdsBy43NxGhQdLWOcQq_eO8LnNwGsZxkR73cptXrg==&quot;  # Token for InfluxDB 2.x
+
+  organization = &quot;Varlab&quot;
+
+  bucket = &quot;foot_traffic_data&quot;
+
+</pre>
+</div></div><p> </p></td></tr></tbody></table></div><ol start="2"><li><p>Run Telegraf:</p></li></ol><ul><li><p>After configuring, start Telegraf. It will read from the CSV file and send the data to your InfluxDB database.</p></li><li><p>Open a Command Prompt as Administrator, navigate to the Telegraf folder, and run: </p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">telegraf.exe --config telegraf.conf</pre>
+</div></div></li></ul><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image image-center" alt="image-20241004-024403.png" width="760" loading="lazy" src="attachments/1380483073/1380352024.png?width=760" data-image-src="attachments/1380483073/1380352024.png" data-height="673" data-width="1530" data-unresolved-comment-count="0" data-linked-resource-id="1380352024" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="image-20241004-024403.png" data-base-url="https://varlab-dev.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="1380483073" data-linked-resource-container-version="6" data-media-id="53a249bb-3296-4908-bec3-d650b39a27c7" data-media-type="file"></span><p /><p>[REFERENCE: Mock-up data]</p><p class="media-group"><span class="confluence-embedded-file-wrapper"><a class="confluence-embedded-file" href="attachments/1380483073/1380286475.csv" data-nice-type="null" data-file-src="/wiki/download/attachments/1380483073/foot_traffic_mock_data.csv?version=1&amp;modificationDate=1728009613157&amp;cacheVersion=1&amp;api=v2" data-linked-resource-id="1380286475" data-linked-resource-type="attachment" data-linked-resource-container-id="1380483073" data-linked-resource-default-alias="foot_traffic_mock_data.csv" data-mime-type="text/csv" data-has-thumbnail="true" data-linked-resource-version="1" data-media-id="924d0b3c-254f-4568-b557-7f74a922e990" data-media-type="file"><img src="attachments/thumbnails/1380483073/1380286475" height="250"/></a></span></p><p />
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1380483073/1380352003.png">image-20241004-023210.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1380483073/1380515841.png">image-20241004-023218.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1380483073/1380352012.png">image-20241004-023232.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1380483073/1380286475.csv">foot_traffic_mock_data.csv</a> (text/csv)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1380483073/1380352024.png">image-20241004-024403.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Jun 20, 2025 13:54</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

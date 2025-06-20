@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CNERG F24 : Visitor Simulation Implementation (Using Unity&#39;s AI Navigation Package)</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="CNERG-F24_1356464471.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Unity_1384284208.html">Unity</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            CNERG F24 : Visitor Simulation Implementation (Using Unity&#39;s AI Navigation Package)
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                            
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Eunie</span>, last modified on Oct 08, 2024
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p>I’ve put together a simple simulation where visitors move automatically, and I’d like to share the process with you. I hope the following steps will help set up a similar simulation.</p><p /><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><a href="attachments/1384185903/1385201683.mp4?width=507">VisitorSimulation2.mp4</a></span><p /><p><strong>[Code]</strong> <a class="external-link" data-card-appearance="inline" href="https://bitbucket.org.mcas.ms/VARLab/cnerg-f24-team-rollaball/src/0e2a1a088de2b1c7308fee3c686c0e1ff439aefd/" rel="nofollow">https://bitbucket.org.mcas.ms/VARLab/cnerg-f24-team-rollaball/src/0e2a1a088de2b1c7308fee3c686c0e1ff439aefd/</a> </p><h4 id="VisitorSimulationImplementation(UsingUnity&#39;sAINavigationPackage)-1.ProjectSetup">1. Project Setup</h4><ul><li><p>Set up the NavMesh functionality using Unity's AI Navigation package. Use the latest version of Unity or install the AI Navigation package if necessary.</p><ul><li><p>Click Window &gt; Package Manager.</p></li><li><p>Search for &quot;AI Navigation&quot; and install the AI Navigation package.</p></li></ul></li><li><p>Manual Installation of the AI Navigation Package (If Needed)</p><ul><li><p>If you cannot find the AI Navigation package in the Package Manager or need to install it manually:</p><ul><li><p>Step 2.1: Download NavMesh Components from GitHub</p><ul><li><p>Download the NavMesh Components package provided by Unity from the following link:</p><ul><li><p><a class="external-link" data-card-appearance="inline" href="https://github.com/Unity-Technologies/NavMeshComponents" rel="nofollow">https://github.com/Unity-Technologies/NavMeshComponents</a> </p></li></ul></li><li><p>Copy the NavMeshComponents folder into the Assets folder of your Unity project.</p></li></ul></li></ul></li></ul></li></ul><h4 id="VisitorSimulationImplementation(UsingUnity&#39;sAINavigationPackage)-2.CreatingaNavMeshUsingNavMeshSurface">2. Creating a NavMesh Using NavMeshSurface</h4><ul><li><p>Select the floor object and add a NavMeshSurface component.</p><ul><li><p>Create Empty Object → Add NavMeshSurface </p></li><li><p>Click the Bake button on NavMeshSurface </p></li></ul></li><li><p>Go to the Bake tab and click the Bake button to generate the NavMesh based on the floor.</p><ul><li><p>The NavMesh defines the walkable area where Visitors can move.</p></li></ul></li><li><p>If you generate the NavMesh including only the floor and not the walls, Visitors can move freely across the floor.</p></li></ul><h4 id="VisitorSimulationImplementation(UsingUnity&#39;sAINavigationPackage)-3.SettingUpVisitorObjects">3. Setting Up Visitor Objects</h4><ul><li><p>Create a 3D model or object to be a Visitor (e.g., Cube, Sphere, etc.).</p></li><li><p>Add a NavMeshAgent component to the Visitor object:</p><ul><li><p>In the Inspector window, click Add Component and search for NavMeshAgent.</p></li><li><p>The NavMeshAgent allows the Visitor to move automatically across the NavMesh.</p></li></ul></li><li><p>Adjust the properties of the NavMeshAgent:</p><ul><li><p>Speed: Movement speed.</p></li><li><p>Stopping Distance: Distance at which the Visitor stops when reaching a target.</p></li><li><p>Angular Speed, Acceleration: Rotation speed and acceleration.</p></li></ul></li></ul><h4 id="VisitorSimulationImplementation(UsingUnity&#39;sAINavigationPackage)-4.WritingtheVisitorMovementScript">4. Writing the Visitor Movement Script</h4><p>Create a script named VisitorMovement.cs to make the Visitor move to random positions:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">using UnityEngine;
+using UnityEngine.AI;
+
+public class VisitorMovement : MonoBehaviour
+{
+    private NavMeshAgent agent;
+    public float moveRadius = 5f; // Radius within which the visitor will move
+      
+  void Start()
+  {
+      // Get the NavMeshAgent component
+      agent = GetComponent&lt;NavMeshAgent&gt;();
+  
+      // Set an initial random destination
+      MoveToRandomPosition();
+  }
+  
+  void MoveToRandomPosition()
+  {
+      // Find a random position within the specified radius around the current position
+      Vector3 randomDirection = Random.insideUnitSphere * moveRadius;
+      randomDirection += transform.position;
+  
+      NavMeshHit hit;
+      // Sample a position on the NavMesh that is valid within the given radius
+      NavMesh.SamplePosition(randomDirection, out hit, moveRadius, NavMesh.AllAreas);
+      Vector3 finalPosition = hit.position;
+  
+      // Move the agent to the sampled position
+      agent.SetDestination(finalPosition);
+  }
+  
+  void Update()
+  {
+      // If the agent has reached the destination, move to a new random position
+      if (!agent.pathPending &amp;&amp; agent.remainingDistance &lt;= agent.stoppingDistance)
+      {
+          MoveToRandomPosition();
+      }
+  }
+}</pre>
+</div></div><ul><li><p>Write the VisitorMovement script to make the Visitor move to random positions.</p></li></ul><p /><p /><p />
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1384185903/1384611873.mp4">VisitorSimulation.mp4</a> (video/mp4)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1384185903/1385201683.mp4">VisitorSimulation2.mp4</a> (video/mp4)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Jun 20, 2025 13:54</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

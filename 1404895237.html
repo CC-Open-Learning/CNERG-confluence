@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CNERG F24 : Database (InfluxDB 2.0) Server Deployment and Usage Guide</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="CNERG-F24_1356464471.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="1405353987.html">Database(InfluxDB)</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            CNERG F24 : Database (InfluxDB 2.0) Server Deployment and Usage Guide
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                            
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Eunie</span>, last modified on Oct 21, 2024
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <div class="confluence-information-macro confluence-information-macro-information"><style>[data-colorid=k8b466t1vz]{color:#0747a6} html[data-color-mode=dark] [data-colorid=k8b466t1vz]{color:#5999f8}</style><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon" /><div class="confluence-information-macro-body"><p>You can easily <strong>INGEST</strong> and <strong>QUERY</strong> data using the <strong>InfluxDB Web GUI</strong>. You can access InfluxDB directly using the server domain and port:<br />: <a class="external-link" href="http://cnerg-data.canadacentral.cloudapp.azure.com:8086/" rel="nofollow">http://cnerg-data.canadacentral.cloudapp.azure.com:8086/</a></p></div></div><p /><p>This document details <strong>InfluxDB 2.0 installation and usage</strong> with steps for <strong>Windows and Linux environments</strong>, covering data insertion and querying.</p><p><strong><span data-colorid="k8b466t1vz">Sources and References: </span></strong><a class="external-link" href="https://docs.influxdata.com/influxdb/v2/" rel="nofollow">INFLUXDB Guide</a></p><h2 id="Database(InfluxDB2.0)ServerDeploymentandUsageGuide-CloudServerDeploymentforInfluxDB"><img class="emoticon emoticon-blue-star" data-emoji-id="1f4d8" data-emoji-shortname=":blue_book:" data-emoji-fallback="\uD83D\uDCD8" src="images/icons/emoticons/72/1f4d8.png" width="16" height="16" data-emoticon-name="blue-star" alt="(blue star)"/>&nbsp;Cloud Server Deployment for InfluxDB</h2><ol start="1"><li><p>Installing InfluxDB 2.0 (Linux)</p><ol start="1"><li><p>Download and Install InfluxDB:<br />(Refer to <a class="external-link" data-card-appearance="inline" href="https://docs.influxdata.com/influxdb/v2/install/" rel="nofollow">https://docs.influxdata.com/influxdb/v2/install/</a> )</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.7.0-amd64.deb
+sudo dpkg -i influxdb2-2.7.0-amd64.deb</pre>
+</div></div></li><li><p>Start InfluxDB:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">sudo systemctl start influxdb</pre>
+</div></div><ol start="1"><li><p>Enable automatic start on server boot:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">sudo systemctl enable influxdb</pre>
+</div></div></li></ol></li><li><p>Verify Installation:</p><ol start="1"><li><p>Check the status:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">sudo systemctl status influxdb</pre>
+</div></div></li></ol></li></ol></li><li><p>Initial InfluxDB Setup and Token Generation</p><ol start="1"><li><p>Initial Setup</p><ol start="1"><li><p>Run Initial Setup: During the <strong>initial setup</strong> (when you first run <code>influx setup</code>), the actual token is displayed at the end of the process.</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">influx setup</pre>
+</div></div></li><li><p>Configure the following:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">Username: cner
+Password: ********
+Organization: VARLab
+Bucket: foot_traffic_db_v1
+Retention Period: infinite</pre>
+</div></div></li></ol></li><li><p>Verify Token and Organization:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">influx auth list --org VARLab --host http://localhost:8086</pre>
+</div></div></li></ol></li></ol><div class="confluence-information-macro confluence-information-macro-information"><span class="aui-icon aui-icon-small aui-iconfont-info confluence-information-macro-icon" /><div class="confluence-information-macro-body"><p><strong>Note</strong>: The InfluxDB token will not be included in this manual for security reasons. The token will be shared with the team members <strong>via email</strong>.</p></div></div><h2 id="Database(InfluxDB2.0)ServerDeploymentandUsageGuide-WorkingwithInfluxDBLocally"><img class="emoticon emoticon-blue-star" data-emoji-id="1f4cb" data-emoji-shortname=":clipboard:" data-emoji-fallback="\uD83D\uDCCB" src="images/icons/emoticons/72/1f4cb.png" width="16" height="16" data-emoticon-name="blue-star" alt="(blue star)"/>&nbsp;Working with InfluxDB Locally</h2><p>This section covers how to interact with the InfluxDB server from each developer's local computer environment. It focuses on uploading data, running queries, and retrieving data from the server using the <strong>InfluxDB client</strong>.<br /></p><ol start="1"><li><p>Installing the InfluxDB Client<br />To execute queries or interact with the InfluxDB server from your local machine, you need to install the <strong>InfluxDB client</strong>. Follow the instructions below for your operating system:</p><ol start="1"><li><p>Installing the InfluxDB Client on Windows</p><ol start="1"><li><p>Download the <strong>InfluxDB client</strong> for Windows from the <a class="external-link" href="https://portal.influxdata.com/downloads/" rel="nofollow">InfluxData downloads page</a>.</p></li><li><p>Install the client by following the on-screen instructions.</p></li><li><p>Ensure the <strong>influx</strong> command is available from your command line by adding the installation path to your <strong>environment variables</strong>.</p></li></ol></li><li><p>Installing the InfluxDB Client on Linux</p><ol start="1"><li><p>Download and install the InfluxDB client:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">wget https://dl.influxdata.com/influxdb/releases/influxdb2-client_2.7.0_amd64.deb
+sudo dpkg -i influxdb2-client_2.7.0_amd64.deb</pre>
+</div></div></li><li><p>Verify the installation:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">influx version</pre>
+</div></div></li></ol></li></ol></li><li><p>Uploading CSV Data to InfluxDB</p><ol start="1"><li><p>Prepare the CSV file:</p><ol start="1"><li><p> <span class="confluence-embedded-file-wrapper"><a class="confluence-embedded-file" href="attachments/1404895237/1404993572.csv" data-nice-type="null" data-file-src="/wiki/download/attachments/1404895237/foot_traffic_mock_data_sept_oct.csv?version=1&amp;modificationDate=1729305677577&amp;cacheVersion=1&amp;api=v2" data-linked-resource-id="1404993572" data-linked-resource-type="attachment" data-linked-resource-container-id="1404895237" data-linked-resource-default-alias="foot_traffic_mock_data_sept_oct.csv" data-mime-type="text/csv" data-has-thumbnail="true" data-linked-resource-version="1" data-media-id="46393afd-6fb7-418a-bfb5-c38b5422f833" data-media-type="file"><img src="attachments/thumbnails/1404895237/1404993572" height="250"/></a></span> example:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: text; gutter: false; theme: Confluence" data-theme="Confluence">Time,DOOR_ID,IN,OUT 
+2024-10-17 09:50:21,0,3,0 
+2024-10-17 09:01:50,1,1,5 
+2024-10-17 09:51:46,1,9,0 
+2024-10-17 09:00:58,1,2,9</pre>
+</div></div></li></ol></li><li><p>Uploading CSV Data to InfluxDB</p><ol start="1"><li><p>Upload Script (Windows)</p><ul><li><p>Create Upload Script for CSV Data (Windows PowerShell): PowerShell script <code>upload_foot_traffic.ps1</code></p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: powershell; gutter: false; theme: Confluence" data-theme="Confluence">param (
+    [string]$CSV_FILE = &quot;foot_traffic_mock_data.csv&quot;
+)
+
+$INFLUX_BUCKET = &quot;foot_traffic_db_v1&quot;
+$INFLUX_ORG = &quot;VARLab&quot;
+$INFLUX_TOKEN = &quot;your_influxdb_token&quot;
+$INFLUX_URL = &quot;http://localhost:9999&quot;
+
+Get-Content $CSV_FILE | Select-Object -Skip 1 | ForEach-Object {
+    $fields = $_ -split &quot;,&quot;
+    $time = $fields[0]
+    $door_id = $fields[1]
+    $in_count = $fields[2]
+    $out_count = $fields[3]
+
+    $timestamp = [datetime]::Parse($time).ToUniversalTime().ToString(&quot;yyyy-MM-ddTHH:mm:ssZ&quot;)
+    $lineProtocol = &quot;foot_traffic,DOOR_ID=$door_id IN=$in_count,OUT=$out_count $timestamp&quot;
+    Add-Content -Path &quot;foot_traffic.lp&quot; -Value $lineProtocol
+}
+
+Invoke-WebRequest -Uri &quot;$INFLUX_URL/api/v2/write?bucket=$INFLUX_BUCKET&amp;org=$INFLUX_ORG&amp;precision=s&quot; `
+    -Method POST `
+    -Headers @{ &quot;Authorization&quot; = &quot;Token $INFLUX_TOKEN&quot; } `
+    -InFile &quot;foot_traffic.lp&quot;
+</pre>
+</div></div><p /></li><li><p>Run the Script:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: powershell; gutter: false; theme: Confluence" data-theme="Confluence">.\upload_foot_traffic.ps1 -CSV_FILE &quot;foot_traffic_mock_data.csv&quot;</pre>
+</div></div></li></ul></li><li><p>Upload Script (Linux)</p><ul><li><p>Create Upload Script for CSV Data (Linux)<br /><code>upload_foot_traffic.sh</code></p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">#!/bin/bash
+
+CSV_FILE=$1
+INFLUX_BUCKET=&quot;foot_traffic_db_v1&quot;
+INFLUX_ORG=&quot;VARLab&quot;
+INFLUX_TOKEN=&quot;your_influxdb_token&quot;
+INFLUX_URL=&quot;http://localhost:9999&quot;
+
+tail -n +2 &quot;$CSV_FILE&quot; | while IFS=, read -r TIME DOOR_ID IN OUT; do
+  timestamp=$(date -d &quot;$TIME&quot; +&quot;%s&quot;)000000000
+  echo &quot;foot_traffic,DOOR_ID=$DOOR_ID IN=$IN,OUT=$OUT $timestamp&quot;
+done &gt; /tmp/foot_traffic.lp
+
+curl -X POST &quot;$INFLUX_URL/api/v2/write?bucket=$INFLUX_BUCKET&amp;org=$INFLUX_ORG&amp;precision=ns&quot; \
+  -H &quot;Authorization: Token $INFLUX_TOKEN&quot; \
+  --data-binary @/tmp/foot_traffic.lp
+  Run the Script:</pre>
+</div></div></li><li><p>Run the Script:</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">chmod +x upload_foot_traffic.sh
+./upload_foot_traffic.sh foot_traffic_mock_data.csv</pre>
+</div></div></li></ul></li></ol></li></ol></li><li><p>Querying and Exporting Data</p><ol start="1"><li><p>Querying Data</p><ol start="1"><li><p>Retrieve all data:t <strong>$INFLUX_TOKEN</strong> refers to the token created by the server</p><ul><li><p>Windows (PowerShell)</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: powershell; gutter: false; theme: Confluence" data-theme="Confluence">influx query 'from(bucket: &quot;foot_traffic_db_v1&quot;) |&gt; range(start: 1970-01-01T00:00:00Z)' `
+  --org VARLab --host http://localhost:9999 --token $Env:INFLUX_TOKEN</pre>
+</div></div></li><li><p>Linux</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">influx query 'from(bucket: 
+&quot;foot_traffic_db_v1&quot;) |&gt; range(start: 1970-01-01T00:00:00Z)' \
+  --org VARLab --host http://localhost:9999 --token $INFLUX_TOKEN</pre>
+</div></div></li></ul></li></ol></li><li><p>Save Query Results to a File: <span class="confluence-embedded-file-wrapper"><a class="confluence-embedded-file" href="attachments/1404895237/1405124668.csv" data-nice-type="null" data-file-src="/wiki/download/attachments/1404895237/foot_traffic_query_results.csv?version=1&amp;modificationDate=1729306114366&amp;cacheVersion=1&amp;api=v2" data-linked-resource-id="1405124668" data-linked-resource-type="attachment" data-linked-resource-container-id="1404895237" data-linked-resource-default-alias="foot_traffic_query_results.csv" data-mime-type="text/csv" data-has-thumbnail="true" data-linked-resource-version="1" data-media-id="cd2c502d-9a75-4581-98ca-936ede5b94a1" data-media-type="file"><img src="attachments/thumbnails/1404895237/1405124668" height="250"/></a></span> </p><ul><li><p>Windows (PowerShell):</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: powershell; gutter: false; theme: Confluence" data-theme="Confluence">influx query 'from(bucket: &quot;foot_traffic_db_v1&quot;) |&gt; range(start: 1970-01-01T00:00:00Z)' `
+  --org VARLab --host http://localhost:9999 --token $Env:INFLUX_TOKEN &gt; foot_traffic_query_results.csv</pre>
+</div></div></li><li><p>Linux</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">influx query 'from(bucket: &quot;foot_traffic_db_v1&quot;) |&gt; range(start: 1970-01-01T00:00:00Z)' \
+  --org VARLab --host http://localhost:9999 --token $INFLUX_TOKEN &gt; foot_traffic_query_results.csv</pre>
+</div></div></li></ul></li></ol></li></ol><h2 id="Database(InfluxDB2.0)ServerDeploymentandUsageGuide-Reference:AccessingandConfiguringRemoteServer"><img class="emoticon emoticon-blue-star" data-emoji-id="1f4cb" data-emoji-shortname=":clipboard:" data-emoji-fallback="\uD83D\uDCCB" src="images/icons/emoticons/72/1f4cb.png" width="16" height="16" data-emoticon-name="blue-star" alt="(blue star)"/>&nbsp;Reference: Accessing and Configuring Remote Server<br /></h2><ol start="1"><li><p>SSH Tunneling for Remote Access</p><ol start="1"><li><p><strong>Set Up SSH Tunneling</strong>:<br />This forwards <strong>port 9999 </strong>on your local machine to <strong>port 8086</strong> on the remote server.</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: bash; gutter: false; theme: Confluence" data-theme="Confluence">ssh -i ~/server/key -L 9999:localhost:8086 cnerg-admin@cnerg-data.canadacentral.cloudapp.azure.com</pre>
+</div></div></li><li><p><strong>Direct Access Using Server Domain</strong> (When Ports Are Open):</p><ol start="1"><li><p>Once configured, access InfluxDB directly through the server domain<br /><a class="external-link" href="http://cnerg-data.canadacentral.cloudapp.azure.com:8086" rel="nofollow">http://cnerg-data.canadacentral.cloudapp.azure.com:8086</a></p></li></ol></li></ol></li></ol><p><br /></p><p />
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1404895237/1404993572.csv">foot_traffic_mock_data_sept_oct.csv</a> (text/csv)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1404895237/1405124668.csv">foot_traffic_query_results.csv</a> (text/csv)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Jun 20, 2025 13:54</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

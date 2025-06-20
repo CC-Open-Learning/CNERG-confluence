@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CNERG F24 : Visualize CSV File Using Unity</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="CNERG-F24_1356464471.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Unity_1384284208.html">Unity</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            CNERG F24 : Visualize CSV File Using Unity
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                            
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Alice Nguyen</span> on Oct 21, 2024
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p /><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><a href="attachments/1406566402/1407942658.mp4?width=760">ReadCSV.mp4</a></span><ol start="1"><li><p><strong>Prepare the CSV File </strong></p></li></ol><p>This is mock up data using C# to generate. Here is the script:</p><p><br/>using System;<br/>using <a class="external-link" href="http://System.IO" rel="nofollow">System.IO</a>;</p><p>class CSVGenerator<br/>{<br/>    static void Main(string[] args)<br/>    {<br/>        // Specify the output file<br/>        string outputPath = &quot;event_data.csv&quot;;</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">    // Create a base timestamp
+    DateTime baseTime = new DateTime(2024, 10, 10, 8, 0, 1); // Start at 2024-10-10 08:00:01
+    int eventCount = 102; // Number of events to generate (from 0 to 101)
+    int locationCount = 4; // Number of different locations (0 to 3)
+
+    // Array to alternate between &quot;IN&quot; and &quot;OUT&quot; status
+    string[] status = { &quot;IN&quot;, &quot;OUT&quot; };
+
+    // Open the CSV file for writing
+    using (StreamWriter writer = new StreamWriter(outputPath))
+    {
+        // Generate event data
+        for (int i = 0; i &lt; eventCount; i++)
+        {
+            // Calculate the timestamp by adding seconds
+            DateTime eventTime = baseTime.AddSeconds(i * (new Random().Next(1, 5))); // Randomly add 1-4 seconds between events
+
+            // Get the location and status
+            int locationId = i % locationCount; // Location alternates between 0 and 3
+            string eventStatus = status[i % status.Length]; // Alternates between IN/OUT
+
+            // Format the timestamp to match the desired format
+            string timestamp = eventTime.ToString(&quot;yyyy-MM-ddTHH:mm:ss.fffZ&quot;);
+
+            // Write the line to the CSV
+            writer.WriteLine($&quot;{i},{timestamp},{locationId},{eventStatus}&quot;);
+        }
+    }
+
+    Console.WriteLine($&quot;CSV file generated: {outputPath}&quot;);
+}</pre>
+</div></div><p>}</p><ol start="2"><li><p><strong>Set up Unity Scene</strong><br/>You can create the scene in Unity as follow:<br/>a. Create a new Scene<br/>b. UI Set up: Create <strong>UI</strong> elements to display the data:</p></li></ol><ul><li><p>Go to GameObject -&gt; UI -&gt; Text to <strong>create a UI Text</strong></p></li><li><p>Go to GameObject  -&gt; UI -&gt; <strong>Canvas </strong>to <strong>group related UI elements together</strong></p></li></ul><ol start="3"><li><p><strong>Script to load CSV file</strong></p></li></ol><p>using System;  <br/>using System.Collections.Generic;  <br/>using System.Globalization;  <br/>using <a class="external-link" href="http://System.IO" rel="nofollow">System.IO</a>;  <br/>using UnityEngine;  </p><p>public class CSVReader : MonoBehaviour  <br/>{  <br/>    public string fileName = &quot;events.csv&quot;;  <br/>    private List&lt;EventData&gt; events = new List&lt;EventData&gt;();  <br/>    private DateTime startTime;  </p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">void Start()  
+{  
+    ReadCSV();  
+}  
+
+void ReadCSV()  
+{  
+    string filePath = Path.Combine(Application.streamingAssetsPath, fileName);  
+    if (File.Exists(filePath))  
+    {  
+        string[] dataLines = File.ReadAllLines(filePath);  
+        if (dataLines.Length &gt; 0)  
+        {  
+            ParseFirstLine(dataLines[0]);  
+            ParseRemainingLines(dataLines);  
+        }  
+    }  
+    else  
+    {  
+        Debug.LogError($&quot;CSV file not found at path: {filePath}&quot;);  
+    }  
+}  
+
+void ParseFirstLine(string firstLine)  
+{  
+    string[] data = firstLine.Split(&#39;,&#39;);  
+    startTime = DateTime.Parse(data[1], null, DateTimeStyles.RoundtripKind);  
+    AddEventData(data);  
+}  
+
+void ParseRemainingLines(string[] dataLines)  
+{  
+    for (int i = 1; i &lt; dataLines.Length; i++)  
+    {  
+        string[] data = dataLines[i].Split(&#39;,&#39;);  
+        AddEventData(data);  
+    }  
+}  
+
+void AddEventData(string[] data)  
+{  
+    DateTime eventTime = DateTime.Parse(data[1], null, DateTimeStyles.RoundtripKind);  
+    EventData eventData = new EventData  
+    {  
+        eventId = int.Parse(data[0]),  
+        timestamp = (float)(eventTime - startTime).TotalSeconds, // Calculate the relative timestamp in seconds  
+        absoluteTimestamp = eventTime, // Store the absolute timestamp  
+        locationId = data[2],  
+        direction = data[3]  
+    };  
+    events.Add(eventData);  
+}  
+
+public List&lt;EventData&gt; GetEvents()  
+{  
+    return events;  
+}  </pre>
+</div></div><p>}  </p><p>public class EventData  <br/>{  <br/>    public int eventId;  <br/>    public float timestamp;  <br/>    public DateTime absoluteTimestamp; // Add this line to store the absolute timestamp  <br/>    public string locationId;  <br/>    public string direction;  <br/>}  </p><ol start="4"><li><p><strong>Script to replay events</strong><br/>using System;<br/>using System.Collections.Generic;<br/>using TMPro;<br/>using UnityEngine;</p></li></ol><p>public class EventReplay : MonoBehaviour<br/>{<br/>    public TextMeshProUGUI textEvents; // Assign this in the Inspector<br/>    public TextMeshProUGUI textCounts; // Assign this in the Inspector<br/>    public TextMeshProUGUI textSpeed;  // Assign this in the Inspector<br/>    private CSVReader csvReader;<br/>    private List&lt;EventData&gt; events;<br/>    private Dictionary&lt;string, int&gt; locationCounts;</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">void Start()
+{
+    csvReader = FindObjectOfType&lt;CSVReader&gt;();
+    events = csvReader.GetEvents();
+    locationCounts = new Dictionary&lt;string, int&gt;();
+    StartCoroutine(ReplayEvents());
+}
+
+System.Collections.IEnumerator ReplayEvents()
+{
+    if (events.Count == 0)
+    {
+        yield break;
+    }
+
+    DateTime replayStartTime = events[0].absoluteTimestamp;
+    Debug.Log($&quot;Replay Start Time: {replayStartTime}&quot;);
+
+    for (int i = 0; i &lt; events.Count; i++)
+    {
+        var eventData = events[i];
+        DateTime eventTime = eventData.absoluteTimestamp;
+        Debug.Log($&quot;Event ID: {eventData.eventId}, Event Timestamp: {eventTime}, Replay Start Time: {replayStartTime}&quot;);
+
+        if (i &gt; 0)
+        {
+            var previousEvent = events[i - 1];
+            TimeSpan delay = eventData.absoluteTimestamp - previousEvent.absoluteTimestamp;
+            float speed = 1.0f;
+            if (float.TryParse(textSpeed.text, out float parsedSpeed))
+            {
+                speed = parsedSpeed;
+            }
+            float adjustedDelay = (float)delay.TotalSeconds / speed;
+            Debug.Log($&quot;Speed: {speed}, Adjusted Delay: {adjustedDelay}&quot;);
+            yield return new WaitForSeconds(adjustedDelay);
+        }
+
+        DisplayEvent(eventData);
+    }
+}
+
+void DisplayEvent(EventData eventData)
+{
+    string locationId = eventData.locationId.ToString();
+
+    // Initialize the count for the location if it doesn&#39;t exist
+    if (!locationCounts.ContainsKey(locationId))
+    {
+        locationCounts[locationId] = 0;
+    }
+
+    // Update the counts based on the event direction
+    if (eventData.direction == &quot;IN&quot;)
+    {
+        locationCounts[locationId]++;
+    }
+    else if (eventData.direction == &quot;OUT&quot;)
+    {
+        locationCounts[locationId]--;
+    }
+
+    // Display the event details
+    textEvents.text = $&quot;EVENTS:\\n\\n&quot; +
+                       $&quot;event_id: {eventData.eventId}\\n&quot; +
+                       $&quot;timestamp: {eventData.absoluteTimestamp}\\n&quot; +
+                       $&quot;location_id: {eventData.locationId}\\n&quot; +
+                       $&quot;direction: {eventData.direction}&quot;;
+
+    // Display the counts for each location
+    textCounts.text = &quot;COUNTS:\\n\\n&quot;;
+    foreach (var location in locationCounts)
+    {
+        textCounts.text += $&quot;Location {location.Key}: {location.Value}\\n&quot;;
+    }
+}</pre>
+</div></div><p>}</p><ol start="5"><li><p><strong>Run the Scene    </strong>   </p></li></ol>
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1406566402/1407942658.mp4">ReadCSV.mp4</a> (video/mp4)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Jun 20, 2025 13:54</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

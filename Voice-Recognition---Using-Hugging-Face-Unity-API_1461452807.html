@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CNERG F24 : Voice Recognition - Using Hugging Face Unity API</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="CNERG-F24_1356464471.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Tech-Research_1367408647.html">Tech Research</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="Voice-Recognition_1471873035.html">Voice Recognition</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            CNERG F24 : Voice Recognition - Using Hugging Face Unity API
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                            
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> Alice Nguyen</span>, last modified on Nov 28, 2024
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <p><style>[data-colorid=b4fu6g93xh]{color:#bf2600} html[data-color-mode=dark] [data-colorid=b4fu6g93xh]{color:#ff6640}[data-colorid=lz4mkxvt5m]{color:#4c9aff} html[data-color-mode=dark] [data-colorid=lz4mkxvt5m]{color:#004eb3}[data-colorid=htvn8bxd7y]{color:#403294} html[data-color-mode=dark] [data-colorid=htvn8bxd7y]{color:#796bcd}[data-colorid=iuphbh21o0]{color:#403294} html[data-color-mode=dark] [data-colorid=iuphbh21o0]{color:#796bcd}[data-colorid=kv1b1dh7vz]{color:#403294} html[data-color-mode=dark] [data-colorid=kv1b1dh7vz]{color:#796bcd}[data-colorid=jn2m6jtjos]{color:#403294} html[data-color-mode=dark] [data-colorid=jn2m6jtjos]{color:#796bcd}[data-colorid=p1w2vsahvz]{color:#4c9aff} html[data-color-mode=dark] [data-colorid=p1w2vsahvz]{color:#004eb3}[data-colorid=p2lxjjefl0]{color:#0747a6} html[data-color-mode=dark] [data-colorid=p2lxjjefl0]{color:#5999f8}[data-colorid=gs2ywjdqkd]{color:#403294} html[data-color-mode=dark] [data-colorid=gs2ywjdqkd]{color:#796bcd}[data-colorid=tk8moe74is]{color:#403294} html[data-color-mode=dark] [data-colorid=tk8moe74is]{color:#796bcd}[data-colorid=br3t6wp8wf]{color:#ffc400} html[data-color-mode=dark] [data-colorid=br3t6wp8wf]{color:#ffc400}[data-colorid=njanqljws7]{color:#0747a6} html[data-color-mode=dark] [data-colorid=njanqljws7]{color:#5999f8}[data-colorid=x5eruglf88]{color:#fff0b3} html[data-color-mode=dark] [data-colorid=x5eruglf88]{color:#4c3d00}</style><strong><u>I. INTRODUCTION</u></strong></p><p><em><span data-colorid="br3t6wp8wf">Hugging Face Unity API</span></em><span data-colorid="x5eruglf88"> </span>is a platform and community that revolutionizes how we approach artificial intelligence and machine learning. It&rsquo;s like a social network for AI enthusiasts, researchers and developers <span data-colorid="lz4mkxvt5m">=&gt;</span> Designed to make AI more <strong>accessible</strong>, <strong>collaborative </strong>and <strong>open </strong>to everyone.</p><p><strong><u>II. INSTALL AND USE </u></strong> </p><ol start="1"><li><p> Add Hugging Face package in your Project by Click + and select  <code>Add Package from git URL</code>: </p></li><li><p>URL link: <code>https://github.com/huggingface/unity-api.git</code></p></li><li><p>Once installed, the Unity API wizard should pop up. If not, go to <code>Window</code> -&gt; <code>Hugging Face API Wizard</code></p></li><li><p>Enter your API key. Your API key can be created in your <a class="external-link" href="https://huggingface.co/settings/tokens" rel="nofollow"><u>Hugging Face account settings</u></a>.</p></li><li><p>Test the API key by clicking <code>Test API key</code> in the API Wizard.</p></li></ol><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image image-center" alt="apiwizard.png" width="521" loading="lazy" src="attachments/1461452807/1461616665.png?width=521" data-image-src="attachments/1461452807/1461616665.png" data-height="512" data-width="521" data-unresolved-comment-count="0" data-linked-resource-id="1461616665" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="apiwizard.png" data-base-url="https://varlab-dev.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="1461452807" data-linked-resource-container-version="3" data-media-id="268adae0-a39a-4864-80c9-154ba1373202" data-media-type="file" /></span><p><strong><u>III.  AI SPEECH RECOGNITION IN UNITY</u></strong></p><p>This feature can be used for giving commands, speaking to an NPC, improving accessibility, or any other functionality where coverting spoken words to text may be useful. </p><ol start="1"><li><p><strong>Set up the Scence</strong></p></li></ol><p><em>Creating a Canvas with UI elements:</em></p><ul><li><p><strong>Start Button</strong>: This will start the recording</p></li><li><p><strong>Stop Button</strong>: This will stop the recording</p></li><li><p><strong>Text(TextMeshPro): </strong>This is where the result of the speech recognition will be displayed.</p></li></ul><ol start="2"><li><p><strong>Set up the Script</strong></p></li></ol><p>Create a script named <em>SpeechRecognitionTest</em> and attach it to an empty GameObject.</p><p><span data-colorid="gs2ywjdqkd">a. Set up references for the UI elements</span></p><p><em>[SerializeField] private Button startButton;</em><br /><em>[SerializeField] private Button stopButton;</em><br /><em>[SerializeField] private TextMeshProUGUI text;</em></p><p>Assign these refereneces into GameObject in the Unity Inspector</p><span class="confluence-embedded-file-wrapper image-center-wrapper confluence-embedded-manual-size"><img class="confluence-embedded-image image-center" alt="assingedUIelements.png" width="351" loading="lazy" src="attachments/1461452807/1460666377.png?width=351" data-image-src="attachments/1461452807/1460666377.png" data-height="97" data-width="351" data-unresolved-comment-count="0" data-linked-resource-id="1460666377" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="assingedUIelements.png" data-base-url="https://varlab-dev.atlassian.net/wiki" data-linked-resource-content-type="image/png" data-linked-resource-container-id="1461452807" data-linked-resource-container-version="3" data-media-id="96b63c8f-ff56-4bdf-80bf-3699f03538dc" data-media-type="file" /></span><p><span data-colorid="jn2m6jtjos">b. Set up Button listeners in </span><em><span data-colorid="htvn8bxd7y">Start() </span></em><span data-colorid="iuphbh21o0"> method</span></p><p>In the <em>Start() </em> method, add listeners for the start and stop buttons</p><p><em>void Start()</em><br />{</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: java; gutter: false; theme: Confluence" data-theme="Confluence">recordButton.onClick.AddListener(StartRecording);
+stopRecordButton.onClick.AddListener(StopRecording);</pre>
+</div></div><p>}</p><p><span data-colorid="kv1b1dh7vz">c. Record Microphone Input</span></p><ul><li><p>To record audio input, define the following member variables: </p></li></ul><p><em>private AudioClip clip;</em><br /><em>private byte[] bytes;</em><br /><em>private bool recording;</em></p><ul><li><p>Start() Method: adds listeners to the <em>recordButton</em> and <em>stopRecordbutton , </em>which call <em>StartRecording() </em>and <em>StopRecording() </em> methods to hadle recording control:</p></li><li><p><em>StartRecording()</em>: Starts recording audio for up to <strong>10 seconds</strong> at <strong>44100</strong> <strong>Hz</strong>. It also clears any previous keyword text from keywordBox.</p></li><li><p><em>StopRecording</em>(): Stops recording, <strong>converts</strong> the <strong>audio data</strong> to <strong>WAV </strong>format using <em>EncodeAsWAV()</em>, and saves it to a file. It then calls <em>SendRecording()</em> to handle API communication.</p></li><li><p><em>EncodeAsWAV()</em> method, to prepare the audio data for the Hugging Face API.</p><ul><li><p>Create a file named<span data-colorid="p2lxjjefl0"> test.wav</span> to confirm that the audio data is correctly converted to WAV format. This ensures that<span data-colorid="p1w2vsahvz"> </span><em>EncodeAsWAV() properly creates a file that can be played </em></p></li></ul></li></ul><p><em> bytes = EncodeAsWAV(samples, clip.frequency, clip.channels);</em><br /><em> recording = false;</em><br /><em> File.WriteAllBytes(Application.dataPath + &quot;<span data-colorid="njanqljws7">/test.wav</span>&quot;, bytes);</em><br /><em> SendRecording();</em></p><p><span data-colorid="tk8moe74is">d. Speech Recognition</span></p><p><em>SendRecording</em>: This method sends the WAV data to the Hugging Face API for<strong> speech-to-text conversion</strong></p><h1 style="text-align: center;" id="VoiceRecognition-UsingHuggingFaceUnityAPI-***FinalScript:"><span data-colorid="b4fu6g93xh">***Final Script:</span></h1><p>using System.Collections;<br />using System.Collections.Generic;<br />using UnityEngine;<br />using TMPro;<br />using UnityEngine.UI;<br />using <a class="external-link" href="http://System.IO" rel="nofollow">System.IO</a>;<br />using System.Runtime.ConstrainedExecution;<br />using HuggingFace.API;<br />using UnityEngine.SceneManagement;<br />using System;</p><p>public class NewBehaviourScript : MonoBehaviour<br />{<br />    [SerializeField] private Button recordButton;<br />    [SerializeField] private Button stopRecordButton;<br />    [SerializeField] private TextMeshProUGUI textBox;<br />    [SerializeField] private TextMeshProUGUI keywordBox;</p><div class="code panel pdl" style="border-width: 1px;"><div class="codeContent panelContent pdl">
+<pre class="syntaxhighlighter-pre" data-syntaxhighlighter-params="brush: c#; gutter: false; theme: Confluence" data-theme="Confluence">private AudioClip clip;
+private byte[] bytes;
+private bool recording;
+
+
+// Start is called before the first frame update
+void Start()
+{
+   
+    recordButton.onClick.AddListener(StartRecording);
+    stopRecordButton.onClick.AddListener(StopRecording);
+    //stopRecordButton.interactable = false;
+
+}
+
+private void StartRecording()
+{
+    clip = Microphone.Start(null, false, 10, 44100);
+    recording = true;
+    keywordBox.text = &quot;&quot;; // Clear keyword display
+}
+
+private void StopRecording()
+{
+    var position = Microphone.GetPosition(null);
+    Microphone.End(null);
+    var samples = new float[position * clip.channels];
+    clip.GetData(samples, 0);
+    bytes = EncodeAsWAV(samples, clip.frequency, clip.channels);
+    recording = false;
+    File.WriteAllBytes(Application.dataPath + &quot;/test.wav&quot;, bytes);
+    SendRecording();
+}
+
+private void SendRecording()
+{
+    HuggingFaceAPI.AutomaticSpeechRecognition(bytes, response =&gt;
+    {
+        textBox.text = response;
+        DetectKeyword(response);
+    }, error =&gt; {
+        textBox.text = error;
+    });
+}
+
+// Update is called once per frame
+void Update()
+{
+    /*if (recording &amp;&amp; Microphone.GetPosition(null) &gt;= clip.samples)
+    {
+        StopRecording();
+    }*/
+    if (Input.GetMouseButtonDown(0)) // 0 is the left mouse button
+    {
+        if (recording)
+        {
+            StopRecording();
+        }
+        else
+        {
+            StartRecording();
+        }
+
+    }
+}
+
+private byte[] EncodeAsWAV(float[] samples, int frequency, int channels)
+{
+    using (var memoryStream = new MemoryStream(44 + samples.Length * 2))
+    {
+        using (var writer = new BinaryWriter(memoryStream))
+        {
+            writer.Write(&quot;RIFF&quot;.ToCharArray());
+            writer.Write(36 + samples.Length * 2);
+            writer.Write(&quot;WAVE&quot;.ToCharArray());
+            writer.Write(&quot;fmt &quot;.ToCharArray());
+            writer.Write(16);
+            writer.Write((ushort)1);
+            writer.Write((ushort)channels);
+            writer.Write(frequency);
+            writer.Write(frequency * channels * 2);
+            writer.Write((ushort)(channels * 2));
+            writer.Write((ushort)16);
+            writer.Write(&quot;data&quot;.ToCharArray());
+            writer.Write(samples.Length * 2);
+
+            foreach (var sample in samples)
+            {
+                writer.Write((short)(sample * short.MaxValue));
+            }
+
+        }
+
+        return memoryStream.ToArray();
+    }
+}</pre>
+</div></div><p>}</p><p /><p />
+                    </div>
+
+                                        <div class="pageSection group">
+                        <div class="pageSectionHeader">
+                            <h2 id="attachments" class="pageSectionTitle">Attachments:</h2>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1461452807/1461583879.jpg">huggingface-co.jpg</a> (image/jpeg)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1461452807/1461616665.png">apiwizard.png</a> (image/png)
+                                <br/>
+                                                            <img src="images/icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="attachments/1461452807/1460666377.png">assingedUIelements.png</a> (image/png)
+                                <br/>
+                                                    </div>
+                    </div>
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Jun 20, 2025 13:54</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>

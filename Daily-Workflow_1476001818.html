@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CNERG F24 : Daily Workflow</title>
+        <link rel="stylesheet" href="styles/site.css" type="text/css" />
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body class="theme-default aui-theme-default">
+        <div id="page">
+            <div id="main" class="aui-page-panel">
+                <div id="main-header">
+                    <div id="breadcrumb-section">
+                        <ol id="breadcrumbs">
+                            <li class="first">
+                                <span><a href="index.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="CNERG-F24_1356464471.html">CNERG F24</a></span>
+                            </li>
+                                                    <li>
+                                <span><a href="GitHub_1387266056.html">GitHub</a></span>
+                            </li>
+                                                </ol>
+                    </div>
+                    <h1 id="title-heading" class="pagetitle">
+                                                <span id="title-text">
+                            CNERG F24 : Daily Workflow
+                        </span>
+                    </h1>
+                </div>
+
+                <div id="content" class="view">
+                    <div class="page-metadata">
+                            
+        
+    
+        
+    
+        
+        
+            Created by <span class='author'> ASHISH GYAWALI</span>, last modified on Nov 20, 2024
+                        </div>
+                    <div id="main-content" class="wiki-content group">
+                    <h1 id="DailyWorkflow-1.Startfromthemainbranch[orthebasebranch(cnerg-f24-digitaltwin)]">1. Start from the <code>main</code> branch [or the base branch (cnerg-f24-digitaltwin)]</h1><p /><p>Command to know working branch: <code>git rev-parse --abbrev-ref HEAD</code></p><h1 id="DailyWorkflow-Switchtothemainbranch">Switch to the main branch</h1><p>git checkout main</p><h1 id="DailyWorkflow-Fetchthelatestchangesfromtheremoterepository">Fetch the latest changes from the remote repository</h1><p>git fetch origin</p><h1 id="DailyWorkflow-Pullthelatestchangesintoyourlocalmainbranch">Pull the latest changes into your local main branch</h1><p>git pull origin main</p><h1 id="DailyWorkflow-2.CreateorSwitchtoYourFeatureBranch">2. Create or Switch to Your Feature Branch</h1><h1 id="DailyWorkflow-Createandswitchtoanewfeaturebranchfrommain(replace&quot;feature-branch&quot;withyourbranchname)">Create and switch to a new feature branch from main (replace &quot;feature-branch&quot; with your branch name)</h1><p>git checkout -b feature-branch</p><h1 id="DailyWorkflow-ORifyoualreadyhaveafeaturebranch,switchtoit">OR if you already have a feature branch, switch to it</h1><p>git checkout feature-branch</p><h1 id="DailyWorkflow-3.MakeChangesandCommit">3. Make Changes and Commit</h1><p>#Start Developing here</p><h1 id="DailyWorkflow-Addyourchangestothestagingarea">Add your changes to the staging area</h1><p>git add .</p><h1 id="DailyWorkflow-Commityourchangeswithadescriptivemessage">Commit your changes with a descriptive message</h1><p>git commit -m &quot;Implement new feature&quot;</p><h1 id="DailyWorkflow-4.SyncYourFeatureBranchwithmain(usingmerge)">4. Sync Your Feature Branch with <code>main</code> (using merge)</h1><h1 id="DailyWorkflow-Fetchthelatestchangesfromtheremote">Fetch the latest changes from the remote</h1><p>git fetch origin</p><h1 id="DailyWorkflow-Mergethelatestchangesfromthemainbranchintoyourfeaturebranch">Merge the latest changes from the main branch into your feature branch</h1><p>git merge origin/main</p><h1 id="DailyWorkflow-Ifthereareconflicts,resolvethem,thenaddtheresolvedfiles">If there are conflicts, resolve them, then add the resolved files</h1><p>git add &lt;file-with-conflict&gt;</p><h1 id="DailyWorkflow-Completethemerge">Complete the merge</h1><p>git commit</p><h1 id="DailyWorkflow-5.TestYourFeature">5. Test Your Feature</h1><h1 id="DailyWorkflow-Runyourteststomakesureeverythingworksafterthemerge">Run your tests to make sure everything works after the merge</h1><h1 id="DailyWorkflow-6.PushYourChangestotheRemoteRepository">6. Push Your Changes to the Remote Repository</h1><h1 id="DailyWorkflow-Pushyourfeaturebranchtotheremoterepository">Push your feature branch to the remote repository</h1><p>git push origin feature-branch</p><h1 id="DailyWorkflow-7.CreateaPullRequest(PR)">7. Create a Pull Request (PR)</h1><h1 id="DailyWorkflow-GotoyourGithostingplatform(GitHub,GitLab,Bitbucket),andcreateaPullRequest(PR)tomergeyourfeaturebranchintothemainbranch.">Go to your Git hosting platform (GitHub, GitLab, Bitbucket), and create a Pull Request (PR) to merge your feature branch into the <code>main</code> branch.</h1><h1 id="DailyWorkflow-8.MergethePullRequest">8. Merge the Pull Request</h1><h1 id="DailyWorkflow-OncethePRisreviewedandapproved,mergeitintothemainbranchviatheGithostingplatform&#39;swebinterface.">Once the PR is reviewed and approved, merge it into the <code>main</code> branch via the Git hosting platform's web interface.</h1><h1 id="DailyWorkflow-ORifmergingmanually,followthesesteps:">OR if merging manually, follow these steps:</h1><h1 id="DailyWorkflow-Switchtothemainbranch.1">Switch to the main branch</h1><p>git checkout main</p><h1 id="DailyWorkflow-Pullthelatestchangesfromtheremotemainbranch">Pull the latest changes from the remote main branch</h1><p>git pull origin main</p><h1 id="DailyWorkflow-Mergeyourfeaturebranchintothemainbranch">Merge your feature branch into the main branch</h1><p>git merge feature-branch</p><h1 id="DailyWorkflow-Pushthemergedchangestotheremoterepository">Push the merged changes to the remote repository</h1><p>git push origin main</p><h1 id="DailyWorkflow-9.CleanUpYourFeatureBranch">9. Clean Up Your Feature Branch</h1><h1 id="DailyWorkflow-Deletethelocalfeaturebranch">Delete the local feature branch</h1><p>git branch -d feature-branch</p><h1 id="DailyWorkflow-Deletetheremotefeaturebranch">Delete the remote feature branch</h1><p>git push origin --delete feature-branch</p>
+                    </div>
+
+                    
+                                                      
+                </div>             </div> 
+            <div id="footer" role="contentinfo">
+                <section class="footer-body">
+                    <p>Document generated by Confluence on Jun 20, 2025 13:54</p>
+                    <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+                </section>
+            </div>
+        </div>     </body>
+</html>
